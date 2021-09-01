@@ -24,80 +24,92 @@ Source: /Users/johan/Documents/workspace/CodeJam2021/src/savefuture.asm
     22 				;
     23
     24 				start
-    25 FFFF> 2000-2002> 4C 00 + 	jmp start	
-    26
-    27 				;
-    28 02E0-02E1> 00 20			run start	
-    29 				;
-    30 				; VBI routine
-    31 				;
-    32
-    33
-    34 				;
-    35 				; DLI Routine
-    36 				;
+    25 				; 	Load display list
+    26 FFFF> 2000-2011> A9 12		lda #<dl
+    27 2002 8D 30 02			sta $230
+    28 2005 A9 20			lda #>dl
+    29 2007 8D 31 02			sta $231
+    30 					; wide playfield
+    31 					;lda #35
+    32 					;sta $22f
+    33 200A A9 00			lda #0
+    34 200C 8D 04 D4			sta HSCRL
+    35
+    36 200F 4C 0F 20		stop	jmp stop	
     37
-    38 				;-----------------------------
-    39 				; Data	
-    40 				;-----------------------------
-    41 				; Display List
+    38 				;
+    39 02E0-02E1> 00 20			run start	
+    40 				;
+    41 				; VBI routine
     42 				;
-    43 2003				.local dl
-    44 2003-2051> F0			.byte $F0
-    45 2004 D4 00 40		lms00	.byte $D4,a(sm)
-    46 2007 D4 A0 40		lms01	.byte $D4,a(sm+160)
-    47 200A D4 40 41		lms02	.byte $D4,a(sm+320)
-    48 200D D4 E0 41		lms03	.byte $D4,a(sm+480)
-    49 2010 D4 80 42		lms04	.byte $D4,a(sm+640)
-    50 2013 D4 20 43		lms05	.byte $D4,a(sm+800)
-    51 2016 D4 C0 43		lms06	.byte $D4,a(sm+960)
-    52 2019 D4 60 44		lms07	.byte $D4,a(sm+1120)
-    53 201C 44 00 45		lms08	.byte $44,a(sm+1280)
-    54 201F 44 A0 45		lms09	.byte $44,a(sm+1440)
-    55 2022 44 40 46		lms10	.byte $44,a(sm+1600)
-    56 2025 44 E0 46		lms11	.byte $44,a(sm+1760)
-    57 2028 D4 80 47		lms12	.byte $D4,a(sm+1920)
-    58 202B 54 20 48		lms13	.byte $54,a(sm+2080)
-    59 202E 54 C0 48		lms14	.byte $54,a(sm+2240)
-    60 2031 54 60 49		lms15	.byte $54,a(sm+2400)
-    61 2034 54 00 4A		lms16	.byte $54,a(sm+2560)
-    62 2037 54 A0 4A		lms17	.byte $54,a(sm+2720)
-    63 203A D4 40 4B		lms18	.byte $D4,a(sm+2880)
-    64 203D D4 E0 4B		lms19	.byte $D4,a(sm+3040)
-    65 2040 D4 80 4C		lms20	.byte $D4,a(sm+3200)
-    66 2043 D4 20 4D		lms21	.byte $D4,a(sm+3360)
-    67 2046 D4 C0 4D		lms22	.byte $D4,a(sm+3520)
-    68 2049 D4 60 4E		lms23	.byte $D4,a(sm+3680)
-    69 204C 06 40 78		txt		.byte $06,a(text)
-    70 204F 41 03 20				.byte $41,a(dl)
-    71 					.endl
-    72 				;
-    73 				; Screen memory
-    74 				;
-    75 2052				org $4000
-    76 4000				.local sm
-    77 4000-4009> 26 69 72 73 + 	.byte "First line"
-    78 					.endl
-    79 					
-    80 400A				org *+$3836
-    81 7840				.local text	
-    82 7840-784B> 34 65 73 74 + 	.byte "Test of text"
-    83 					.endl
-    84 						
+    43
+    44
+    45 				;
+    46 				; DLI Routine
+    47 				;
+    48
+    49 				;-----------------------------
+    50 				; Data	
+    51 				;-----------------------------
+    52 				; Display List
+    53 				;
+    54 2012				.local dl
+    55 2012-2060> F0			.byte $F0
+    56 2013 45 00 40		lms00	.byte $45,$00,$40
+    57 2016 44 00 41		lms01	.byte $44,$00,$41
+    58 2019 44 00 42		lms02	.byte $44,$00,$42
+    59 201C 44 00 43		lms03	.byte $44,$00,$43
+    60 201F 44 00 44		lms04	.byte $44,$00,$44
+    61 2022 44 00 45		lms05	.byte $44,$00,$45
+    62 2025 44 00 46		lms06	.byte $44,$00,$46
+    63 2028 44 00 47		lms07	.byte $44,$00,$47
+    64 202B 44 00 48		lms08	.byte $44,$00,$48
+    65 202E 44 00 49		lms09	.byte $44,$00,$49
+    66 2031 44 00 50		lms10	.byte $44,$00,$50
+    67 2034 44 00 51		lms11	.byte $44,$00,$51
+    68 2037 44 00 52		lms12	.byte $44,$00,$52
+    69 203A 44 00 53		lms13	.byte $44,$00,$53
+    70 203D 44 00 54		lms14	.byte $44,$00,$54
+    71 2040 44 00 55		lms15	.byte $44,$00,$55
+    72 2043 44 00 56		lms16	.byte $44,$00,$56
+    73 2046 44 00 57		lms17	.byte $44,$00,$57
+    74 2049 44 00 58		lms18	.byte $44,$00,$58
+    75 204C 44 00 60		lms19	.byte $44,$00,$60
+    76 204F 44 00 61		lms20	.byte $44,$00,$61
+    77 2052 44 00 62		lms21	.byte $44,$00,$62
+    78 2055 44 00 63		lms22	.byte $44,$00,$63
+    79 2058 44 00 64		lms23	.byte $44,$00,$64
+    80 205B 47 00 65		txt		.byte $47,$00,$65
+    81 205E 41 12 20				.byte $41,a(dl)
+    82 					.endl
+    83 				;
+    84 				; Screen memory
     85 				;
-    86 				; Character sets
-    87 				;
-    88 784C				org $5000
-    89 5000				.local chset0
-    90 					.endl
-    91 5000				org $5400
-    92 5400				.local chset1
-    93 					.endl
-    94 5400				org *+$5800
-    95 AC00				.local chset2
-    96 AC00				org $6200
-    97 					.endl
-    98 6200				.local chset3
-    99 6200				org $6600
-   100 					.endl
-   101 					
+    86 2061				org $4000
+    87 4000				.local sm
+    88 4000-4009> 26 29 32 33 + 	.byte "FIRST LINE"
+    89 					.endl
+    90 400A				org $4100
+    91 4100-410A> 33 65 63 6F + 	.byte "Second line"
+    92 410B				org $6500
+    93 					;.local text	
+    94 6500-650B> 34 65 73 74 + text	.byte "Test of text"
+    95 					
+    96 						
+    97 				;
+    98 				; Character sets
+    99 				;
+   100 650C				org $7000
+   101 7000				.local chset0
+   102 					.endl
+   103 7000				org $7400
+   104 7400				.local chset1
+   105 					.endl
+   106 7400				org $7800
+   107 7800				.local chset2
+   108 7800				org $8200
+   109 					.endl
+   110 8200				.local chset3
+   111 8200				org $8600
+   112 					.endl
+   113 					
