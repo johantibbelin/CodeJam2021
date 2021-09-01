@@ -1,0 +1,103 @@
+mads 2.1.0
+Source: /Users/johan/Documents/workspace/CodeJam2021/src/savefuture.asm
+     1 				;
+     2 				; OLC CodeJam 2021- Save the Future
+     3 				;
+     4 				; For the Atari 8-bit computers (64kB needed)
+     5 				;
+     6 				; Coded by: sjfroos
+     7 				;
+     8 				; Adresses needed
+     9 				;
+    10 = D40B			VCOUNT=$d40b
+    11 = D40A			WSYNC=$d40a
+    12 = E462			XITVBV=$e462
+    13 = D404			HSCRL=$d404
+    14 = E45C			SETVBV=$e45c
+    15 				;
+    16 				; Start adress
+    17 				;
+    18 					org $2000
+    19
+    20 				;
+    21 				; Init
+    22 				;
+    23
+    24 				start
+    25 FFFF> 2000-2002> 4C 00 + 	jmp start	
+    26
+    27 				;
+    28 02E0-02E1> 00 20			run start	
+    29 				;
+    30 				; VBI routine
+    31 				;
+    32
+    33
+    34 				;
+    35 				; DLI Routine
+    36 				;
+    37
+    38 				;-----------------------------
+    39 				; Data	
+    40 				;-----------------------------
+    41 				; Display List
+    42 				;
+    43 2003				.local dl
+    44 2003-2051> F0			.byte $F0
+    45 2004 D4 00 40		lms00	.byte $D4,a(sm)
+    46 2007 D4 A0 40		lms01	.byte $D4,a(sm+160)
+    47 200A D4 40 41		lms02	.byte $D4,a(sm+320)
+    48 200D D4 E0 41		lms03	.byte $D4,a(sm+480)
+    49 2010 D4 80 42		lms04	.byte $D4,a(sm+640)
+    50 2013 D4 20 43		lms05	.byte $D4,a(sm+800)
+    51 2016 D4 C0 43		lms06	.byte $D4,a(sm+960)
+    52 2019 D4 60 44		lms07	.byte $D4,a(sm+1120)
+    53 201C 44 00 45		lms08	.byte $44,a(sm+1280)
+    54 201F 44 A0 45		lms09	.byte $44,a(sm+1440)
+    55 2022 44 40 46		lms10	.byte $44,a(sm+1600)
+    56 2025 44 E0 46		lms11	.byte $44,a(sm+1760)
+    57 2028 D4 80 47		lms12	.byte $D4,a(sm+1920)
+    58 202B 54 20 48		lms13	.byte $54,a(sm+2080)
+    59 202E 54 C0 48		lms14	.byte $54,a(sm+2240)
+    60 2031 54 60 49		lms15	.byte $54,a(sm+2400)
+    61 2034 54 00 4A		lms16	.byte $54,a(sm+2560)
+    62 2037 54 A0 4A		lms17	.byte $54,a(sm+2720)
+    63 203A D4 40 4B		lms18	.byte $D4,a(sm+2880)
+    64 203D D4 E0 4B		lms19	.byte $D4,a(sm+3040)
+    65 2040 D4 80 4C		lms20	.byte $D4,a(sm+3200)
+    66 2043 D4 20 4D		lms21	.byte $D4,a(sm+3360)
+    67 2046 D4 C0 4D		lms22	.byte $D4,a(sm+3520)
+    68 2049 D4 60 4E		lms23	.byte $D4,a(sm+3680)
+    69 204C 06 40 78		txt		.byte $06,a(text)
+    70 204F 41 03 20				.byte $41,a(dl)
+    71 					.endl
+    72 				;
+    73 				; Screen memory
+    74 				;
+    75 2052				org $4000
+    76 4000				.local sm
+    77 4000-4009> 26 69 72 73 + 	.byte "First line"
+    78 					.endl
+    79 					
+    80 400A				org *+$3836
+    81 7840				.local text	
+    82 7840-784B> 34 65 73 74 + 	.byte "Test of text"
+    83 					.endl
+    84 						
+    85 				;
+    86 				; Character sets
+    87 				;
+    88 784C				org $5000
+    89 5000				.local chset0
+    90 					.endl
+    91 5000				org $5400
+    92 5400				.local chset1
+    93 					.endl
+    94 5400				org *+$5800
+    95 AC00				.local chset2
+    96 AC00				org $6200
+    97 					.endl
+    98 6200				.local chset3
+    99 6200				org $6600
+   100 					.endl
+   101 					

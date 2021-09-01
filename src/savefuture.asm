@@ -68,14 +68,34 @@ lms22	.byte $D4,a(sm+3520)
 lms23	.byte $D4,a(sm+3680)
 txt		.byte $06,a(text)
 		.byte $41,a(dl)
+	.endl
+;
+; Screen memory
+;
+	org $4000
+	.local sm
+	.byte "First line"
+	.endl
+	
+	org *+$3836
+	.local text	
+	.byte "Test of text"
+	.endl
 		
-
 ;
 ; Character sets
 ;
-
-;
-; Screen memory
-
-text	.byte "Test of text"
-	.local sm
+	org $5000
+	.local chset0
+	.endl
+	org $5400
+	.local chset1
+	.endl
+	org *+$5800
+	.local chset2
+	org $6200
+	.endl
+	.local chset3
+	org $6600
+	.endl
+	
