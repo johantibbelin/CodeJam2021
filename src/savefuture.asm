@@ -100,14 +100,7 @@ text	.byte "Test of text"
 	org $7000
 	.local chset0
 	.byte $00,$00,$00,$00,$00,$00,$00,$00
-	.byte %00000001
-	.byte %00000111
-	.byte %00011111
-	.byte %01111111
-	.byte %11111111
-	.byte %11111111
-	.byte %11111111
-	.byte %11111111
+
 
 	.byte %00000000
 	.byte %00000000
@@ -117,6 +110,16 @@ text	.byte "Test of text"
 	.byte %00000111
 	.byte %00011111
 	.byte %01111111
+
+
+	.byte %00000001
+	.byte %00000111
+	.byte %00011111
+	.byte %01111111
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
 
 	.byte %01000000
 	.byte %11010000
@@ -136,6 +139,42 @@ text	.byte "Test of text"
 	.byte %11110100
 	.byte %11111101
 
+	.byte %01111111
+	.byte %00111111
+	.byte %00011111
+	.byte %00000111
+	.byte %00000001
+	.byte %00000000
+	.byte %00000000
+	.byte %00000000
+
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %01111111
+	.byte %00011111
+	.byte %00000111
+	.byte %00000001
+
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %11111111
+	.byte %11111101
+	.byte %11110100
+	.byte %11010000
+	.byte %01000000
+
+	.byte %11111101
+	.byte %11110100
+	.byte %11010000
+	.byte %01000000
+	.byte %00000000
+	.byte %00000000
+	.byte %00000000
+	.byte %00000000
+	
 	.endl
 	org $7400
 	.local chset1
