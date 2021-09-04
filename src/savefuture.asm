@@ -133,6 +133,21 @@ dli5	pha
 	 	lda #$d4
 	 	sta WSYNC
 	 	sta COLBK
+		lda #<dli6
+		sta $200
+		lda #>dli6
+		sta $201
+	 	pla 
+	 	rti
+
+dli6	pha
+	 	lda #$00
+	 	sta WSYNC
+	 	sta COLBK
+	 	lda #$48
+	 	sta COLPF0
+	 	lda #$E0
+	 	sta CHBASE
 		lda #<dli
 		sta $200
 		lda #>dli
@@ -140,7 +155,7 @@ dli5	pha
 	 	pla 
 	 	rti
 
-
+atch 	.byte $00
 ;-----------------------------
 ; Data	
 ;-----------------------------
@@ -171,8 +186,8 @@ lms19	.byte $44,$00,$60
 lms20	.byte $44,$00,$61
 lms21	.byte $44,$00,$62
 lms22	.byte $44,$00,$63
-;lms23	.byte $44,$00,$64
-txt		.byte $47,$00,$65
+lms23	.byte $D4,$00,$64
+txt		.byte $46,$00,$65
 		.byte $41,a(dl)
 	.endl
 ;
@@ -191,7 +206,7 @@ txt		.byte $47,$00,$65
 	
 	org $6500
 	;.local text	
-text	.byte "Test of text"
+text	.byte "  Save the Future"
 	
 		
 ;
