@@ -12,6 +12,19 @@ WSYNC=$d40a
 XITVBV=$e462
 HSCRL=$d404
 SETVBV=$e45c
+COLOR0=708
+COLOR1=709
+COLOR2=710
+COLOR3=711
+COLOR4=712
+CHBAS=756
+COLPF0=$d016
+COLPF1=$d017
+COLPF2=$d018
+COLPF3=$d019
+COLBK=$d01a
+CHBASE=$d409
+NMIEN=$d40e
 ;
 ; Start adress
 ;
@@ -33,20 +46,32 @@ start
 	lda #0
 	sta HSCRL
 
+	; Character set at $7000
 	lda #$70
-	sta 756
+	sta CHBAS
+
+	; set colors
 	
 	lda #$88
-	sta 712
+	sta COLOR4
 
 	lda #$09
-	sta 708
+	sta COLOR0
 	
 	lda #$0f
-	sta 710 
+	sta COLOR2 
 
 	lda #$06
-	sta 711
+	sta COLOR3
+	
+	; Set DLI
+	lda #<dli
+	sta $200
+	lda #>dli
+	sta $201
+	lda #$CF
+	sta $d40e
+	
 
 stop	jmp stop	
 
@@ -58,8 +83,63 @@ stop	jmp stop
 
 
 ;
-; DLI Routine
+; DLI Routines
 ;
+dli	pha
+	lda #$4e
+	sta WSYNC
+	sta COLBK
+	lda #<dli2
+	sta $200
+	lda #>dli2
+	sta $201
+	pla
+	rti
+
+dli2	pha
+	 	lda #$4c
+	 	sta WSYNC
+	 	sta COLBK
+		lda #<dli3
+		sta $200
+		lda #>dli3
+		sta $201
+	 	pla 
+	 	rti
+
+dli3	pha
+	 	lda #$4a
+	 	sta WSYNC
+	 	sta COLBK
+		lda #<dli4
+		sta $200
+		lda #>dli4
+		sta $201
+	 	pla 
+	 	rti
+
+dli4	pha
+	 	lda #$48
+	 	sta WSYNC
+	 	sta COLBK
+		lda #<dli5
+		sta $200
+		lda #>dli5
+		sta $201
+	 	pla 
+	 	rti
+
+dli5	pha
+	 	lda #$d4
+	 	sta WSYNC
+	 	sta COLBK
+		lda #<dli
+		sta $200
+		lda #>dli
+		sta $201
+	 	pla 
+	 	rti
+
 
 ;-----------------------------
 ; Data	
@@ -67,18 +147,18 @@ stop	jmp stop
 ; Display List
 ;
 	.local dl
-	.byte $F0
+	.byte $70
 lms00	.byte $45,$00,$40
 lms01	.byte $45,$00,$41
 lms02	.byte $44,$00,$42
 lms03	.byte $44,$00,$43
 lms04	.byte $44,$00,$44
 lms05	.byte $44,$00,$45
-lms06	.byte $44,$00,$46
-lms07	.byte $44,$00,$47
-lms08	.byte $44,$00,$48
-lms09	.byte $44,$00,$49
-lms10	.byte $44,$00,$50
+lms06	.byte $E4,$00,$46
+lms07	.byte $E4,$00,$47
+lms08	.byte $E4,$00,$48
+lms09	.byte $E4,$00,$49
+lms10	.byte $E4,$00,$50
 lms11	.byte $44,$00,$51
 lms12	.byte $44,$00,$52
 lms13	.byte $44,$00,$53
