@@ -46,6 +46,9 @@ start
 	;sta $22f
 	lda #0
 	sta HSCRL
+	lda #6
+	sta co
+
 
 	; Character set at $7000
 	lda #$70
@@ -82,6 +85,8 @@ start
 stop	jmp stop	
 
 co	.byte $00
+co2 .byte $0c
+co3 .byte $18
 ;
 	run start	
 ;
@@ -89,9 +94,33 @@ co	.byte $00
 ;
 vbi
 	;scroll
-	;inc dl.lms00+1
-	inc HSCRL
+	dec co
+	bne notyet
+	inc dl.lms00+1
+	inc dl.lms01+1
+	lda #6
+	sta co
+notyet	
+	dec co2
+	bne notyet2
+	inc dl.lms02+1
+	lda #12
+	sta co2
+notyet2
+	dec co3
+	bne notyet3
+	inc dl.lms05+1
+	inc dl.lms06+1
+	inc dl.lms07+1
+	inc dl.lms08+1
+	inc dl.lms09+1
+	inc dl.lms10+1
+	lda #24
+	sta co3
+notyet3
+	;inc HSCRL
 	jmp XITVBV
+
 
 ;
 ; DLI Routines
