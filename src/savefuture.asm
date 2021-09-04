@@ -44,9 +44,9 @@ start
 	; (planned but not used)
 	;lda #35
 	;sta $22f
-	lda #0
+	lda #8
 	sta HSCRL
-	lda #6
+;	lda #6
 	sta co
 
 
@@ -87,6 +87,8 @@ stop	jmp stop
 co	.byte $00
 co2 .byte $0c
 co3 .byte $18
+	.byte $00
+o   .byte $00
 ;
 	run start	
 ;
@@ -98,14 +100,20 @@ vbi
 	bne notyet
 	inc dl.lms00+1
 	inc dl.lms01+1
-	lda #6
+	lda #4
 	sta co
+	;sta HSCRL
 notyet	
+	dec o
+	bne odd
+	lda #2
+	sta o
 	dec co2
 	bne notyet2
 	inc dl.lms02+1
-	lda #12
+	lda #4
 	sta co2
+odd
 notyet2
 	dec co3
 	bne notyet3
@@ -118,7 +126,8 @@ notyet2
 	lda #24
 	sta co3
 notyet3
-	;inc HSCRL
+	dec HSCRL
+	;dec HSCRL
 	jmp XITVBV
 
 
@@ -126,6 +135,17 @@ notyet3
 ; DLI Routines
 ;
 dli	pha
+	lda co
+	sta HSCRL
+	lda #<dli1
+	sta $200
+	lda #>dli1
+	sta $201
+	pla
+	rti
+
+dli1
+	pha
 	lda #$4e
 	sta WSYNC
 	sta COLBK
@@ -218,9 +238,9 @@ copycset
 ; Display List
 ;
 	.local dl
-	.byte $70
-lms00	.byte $45,$00,$40
-lms01	.byte $45,$00,$41
+	.byte $D0
+lms00	.byte $55,$00,$40
+lms01	.byte $55,$00,$41
 		.byte $20 ; for more space between clouds
 lms02	.byte $44,$00,$42
 lms03	.byte $44,$00,$43
@@ -256,8 +276,16 @@ txt		.byte $47,$00,$65
 	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
 	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
 	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
+	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
+	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
+	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
+	.byte 14,15,15,15,16,$00,$00,$0a,$0c,$0b,$0c,$0d,$00,$8a,$8c,$8b,$8c,$8d
 	.endl
 	org $4100
+	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte 17,18,18,18,19,0,0,0,0,0,0,0,0,0,0,0,0,0
