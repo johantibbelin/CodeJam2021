@@ -41,6 +41,7 @@ start
 	lda #>dl
 	sta $231
 	; wide playfield
+	; (planned but not used)
 	;lda #35
 	;sta $22f
 	lda #0
@@ -71,16 +72,25 @@ start
 	sta $201
 	lda #$CF
 	sta $d40e
+	; Set VBI
+	ldx #>vbi
+	ldy #<vbi
+	lda #$07
+	jsr SETVBV
 	
 
 stop	jmp stop	
 
+co	.byte $00
 ;
 	run start	
 ;
 ; VBI routine
 ;
-
+vbi
+	;scroll
+	inc dl.lms00+1
+	jmp XITVBV
 
 ;
 ; DLI Routines
@@ -161,7 +171,17 @@ dli6	pha
 	 	pla 
 	 	rti
 
-atch 	.byte $00
+;-----------------------------
+; Character shift routines
+;-----------------------------
+
+copycset
+		lda  
+	
+		rts
+		
+	
+
 ;-----------------------------
 ; Data	
 ;-----------------------------
@@ -580,6 +600,9 @@ text	.byte "  Save the Future"
 	.byte %11111101
 
 	.endl
+;shifted sets 3 - 2 - 1 - 4
+
+
 	org $7400
 	.local chset1
 	.endl
