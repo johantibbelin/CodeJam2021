@@ -87,7 +87,9 @@ stop	jmp stop
 co	.byte $00
 co2 .byte $0c
 co3 .byte $18
-	.byte $00
+sc1 .byte $00
+sc2 .byte $00
+sc3	.byte $00
 o   .byte $00
 ;
 	run start	
